@@ -2,10 +2,4 @@ node_modules
 
 .vscode
 
-.editorconfig
-
-.eslintignore
-
-.eslintrc.json
-
-yarn.lock
+.git
