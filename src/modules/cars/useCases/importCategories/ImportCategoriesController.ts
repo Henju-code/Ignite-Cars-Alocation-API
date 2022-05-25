@@ -1,20 +1,24 @@
 import { Request, Response } from "express";
+import "reflect-metadata";
+import { container } from "tsyringe";
 
 import { ImportCategoriesUseCase } from "./ImportCategoriesUseCase";
 
 class ImportCategoriesController {
-    constructor(private importCategoriesUseCase: ImportCategoriesUseCase) {}
-
-    handle(request: Request, response: Response): Response {
+    async handle(request: Request, response: Response): Promise<Response> {
         const { file } = request;
+
+        const importCategoriesUseCase = container.resolve(
+            ImportCategoriesUseCase
+        );
 
         if (file === undefined) {
             return response.status(400).send();
         }
 
-        this.importCategoriesUseCase.execute(file);
+        await importCategoriesUseCase.execute(file);
 
-        return response.send();
+        return response.status(201).send();
     }
 }
 
